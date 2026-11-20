@@ -1,1 +1,187 @@
 
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5f1595">
+<title>AK Pay - Demo Wallet</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f0f8;font-family:Arial,sans-serif;color:#24202b}
+header{background:#5f1595;color:white;padding:17px 16px;display:flex;align-items:center;justify-content:space-between}
+.profile{display:flex;align-items:center;gap:10px}
+.avatar{background:white;color:#5f1595;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;font-weight:bold}
+.header-icons{display:flex;gap:17px;font-size:21px}
+.demo{background:#fff0cf;color:#754900;text-align:center;padding:7px;font-size:12px;font-weight:bold}
+main{max-width:520px;margin:auto;padding:12px 12px 85px}
+.banner{background:linear-gradient(120deg,#6c2bb1,#a77be1);color:white;border-radius:14px;padding:19px;margin-bottom:14px;min-height:125px}
+.banner small{opacity:.85}
+.banner h2{font-size:20px;margin:9px 0}
+.card{background:white;border-radius:14px;padding:15px;margin-bottom:13px;box-shadow:0 2px 8px #26104412}
+.section-title{font-weight:bold;font-size:16px;margin-bottom:15px}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.action{border:0;background:transparent;color:#292333;font-size:12px;cursor:pointer;padding:5px 2px}
+.action-icon{margin:0 auto 8px;background:#641a9e;color:white;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:22px}
+.upi{background:#f3effb;padding:13px;border-radius:9px;margin-top:14px;font-size:12px;display:flex;justify-content:space-between}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{background:#4b83d1;color:white;border-radius:12px;padding:16px 5px;text-align:center;font-size:12px}
+.tile b{display:block;font-size:22px;margin-bottom:7px}
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:17px 5px;text-align:center}
+.service{font-size:11px;line-height:1.4}
+.service span{display:block;font-size:25px;color:#5f1595;margin-bottom:6px}
+.balance{font-size:26px;font-weight:bold;color:#5f1595;margin:8px 0}
+.muted{font-size:12px;color:#777}
+.transaction{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee;font-size:13px}
+.transaction:last-child{border:0}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;box-shadow:0 -2px 10px #0001;display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom));z-index:5}
+.bottom button{border:0;background:none;color:#777;font-size:11px}
+.bottom button span{display:block;font-size:20px;margin-bottom:4px}
+.bottom button.active{color:#5f1595;font-weight:bold}
+button{cursor:pointer}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:10;align-items:center;justify-content:center;padding:18px}
+.modal-box{background:white;border-radius:16px;padding:20px;width:100%;max-width:380px}
+.modal-box h3{margin-top:0}
+.modal-box input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:9px;font-size:16px}
+.primary{background:#641a9e;color:white;border:0;border-radius:9px;padding:12px;width:100%;margin-top:9px;font-size:15px}
+.secondary{background:#eee;color:#333;border:0;border-radius:9px;padding:11px;width:100%;margin-top:8px}
+.note{font-size:11px;color:#777;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="demo">DEMO WALLET • केवल काल्पनिक पैसे • कोई असली भुगतान नहीं</div>
+<header>
+  <div class="profile">
+    <div class="avatar">AK</div>
+    <div><b>AK Pay</b><br><small>Demo Account</small></div>
+  </div>
+  <div class="header-icons">
+    <span onclick="showMessage('यह केवल डेमो QR स्क्रीन है।')">▦</span>
+    <span onclick="showMessage('अभी कोई नई सूचना नहीं है।')">♧</span>
+    <span onclick="showMessage('AK Pay Demo Help')">ⓘ</span>
+  </div>
+</header>
+<main>
+  <section class="banner">
+    <small>WELCOME TO AK PAY</small>
+    <h2>आपका अपना Demo Wallet</h2>
+    <p>सीखने और ऐप का अनुभव करने के लिए।</p>
+  </section>
+  <section class="card">
+    <div class="section-title">Transfer Money</div>
+    <div class="actions">
+      <button class="action" onclick="openModal('send')"><div class="action-icon">♙</div>To Mobile<br>Number</button>
+      <button class="action" onclick="openModal('send')"><div class="action-icon">⌂</div>To Bank/<br>UPI ID</button>
+      <button class="action" onclick="openModal('self')"><div class="action-icon">◷</div>To Self<br>Account</button>
+      <button class="action" onclick="showMessage('डेमो बैलेंस: ₹'+balance.toLocaleString('en-IN'))"><div class="action-icon">▤</div>Check<br>Balance</button>
+    </div>
+    <div class="upi"><span>My Demo ID: akdemo@wallet</span><b>›</b></div>
+  </section>
+  <div class="tiles">
+    <div class="tile" onclick="openModal('add')"><b>▣</b>AK Wallet</div>
+    <div class="tile" onclick="showMessage('डेमो रिवॉर्ड अभी उपलब्ध नहीं है।')"><b>🎁</b>Rewards</div>
+    <div class="tile" onclick="showMessage('यह डेमो फीचर है।')"><b>♧</b>Refer & Earn</div>
+  </div>
+  <section class="card" style="margin-top:13px">
+    <div class="section-title">Recharge & Pay Bills</div>
+    <div class="services">
+      <div class="service" onclick="showMessage('मोबाइल रिचार्ज केवल डेमो है।')"><span>▣</span>Mobile<br>Recharge</div>
+      <div class="service" onclick="showMessage('DTH सेवा डेमो है।')"><span>◉</span>DTH</div>
+      <div class="service" onclick="showMessage('बिजली बिल भुगतान उपलब्ध नहीं है।')"><span>♧</span>Electricity</div>
+      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>▤</span>Credit Card<br>Bill</div>
+      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>⌂</span>Rent<br>Payment</div>
+      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>₹</span>Loan<br>Repayment</div>
+      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>▥</span>Book a<br>Cylinder</div>
+      <div class="service" onclick="showMessage('और डेमो सेवाएँ जल्द आएँगी।')"><span>➜</span>See All</div>
+    </div>
+  </section>
+  <section class="card">
+    <div class="section-title">My Demo Wallet</div>
+    <div class="muted">Available fictional balance</div>
+    <div class="balance" id="balance">₹50,000</div>
+    <button class="primary" onclick="openModal('add')">+ Add Demo Money</button>
+    <p class="note">यह बैलेंस केवल इस डेमो ऐप में है। इसका कोई वास्तविक मौद्रिक मूल्य नहीं है।</p>
+  </section>
+  <section class="card">
+    <div class="section-title">Recent Transactions</div>
+    <div id="transactions"><div class="muted">अभी कोई ट्रांजैक्शन नहीं है।</div></div>
+  </section>
+</main>
+<nav class="bottom">
+  <button class="active" onclick="showMessage('आप Home स्क्रीन पर हैं।')"><span>⌂</span>Home</button>
+  <button onclick="showTransactions()"><span>▤</span>History</button>
+  <button onclick="showMessage('AK Pay Demo Help')"><span>ⓘ</span>Help</button>
+  <button onclick="showMessage('Profile: Demo User')"><span>♙</span>Profile</button>
+</nav>
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Demo Wallet</h3>
+    <p class="note">यह केवल काल्पनिक लेन-देन है।</p>
+    <input id="amount" type="number" min="1" placeholder="राशि लिखें (₹)">
+    <input id="receiver" type="text" placeholder="डेमो यूज़र का नाम (वैकल्पिक)" style="display:none">
+    <button class="primary" onclick="confirmAction()">Confirm Demo</button>
+    <button class="secondary" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+<script>
+let balance=50000;
+let transactions=[];
+let currentAction="add";
+
+function updateBalance(){
+ document.getElementById("balance").textContent="₹"+balance.toLocaleString("en-IN");
+}
+function openModal(action){
+ currentAction=action;
+ document.getElementById("amount").value="";
+ document.getElementById("receiver").value="";
+ document.getElementById("receiver").style.display=action==="send"?"block":"none";
+ document.getElementById("modalTitle").textContent=action==="add"?"Add Demo Money":action==="send"?"Send Demo Money":"Self Transfer Demo";
+ document.getElementById("modal").style.display="flex";
+}
+function closeModal(){
+ document.getElementById("modal").style.display="none";
+}
+function confirmAction(){
+ const amount=Number(document.getElementById("amount").value);
+ const receiver=document.getElementById("receiver").value.trim();
+ if(!Number.isFinite(amount)||amount<=0){alert("कृपया सही राशि लिखें।");return;}
+ if(currentAction==="add"){
+  balance+=amount;
+  addTransaction("Demo Money Added",amount,"in");
+ }else{
+  if(amount>balance){alert("डेमो वॉलेट में पर्याप्त बैलेंस नहीं है।");return;}
+  balance-=amount;
+  addTransaction(currentAction==="send"?"Demo sent to "+(receiver||"Demo User"):"Self Transfer Demo",amount,"out");
+ }
+ updateBalance();
+ closeModal();
+}
+function addTransaction(title,amount,type){
+ transactions.unshift({title,amount,type});
+ renderTransactions();
+}
+function renderTransactions(){
+ const box=document.getElementById("transactions");
+ box.innerHTML="";
+ transactions.forEach(t=>{
+  const row=document.createElement("div");
+  row.className="transaction";
+  const name=document.createElement("span");
+  name.textContent=t.title;
+  const value=document.createElement("b");
+  value.textContent=(t.type==="in"?"+":"-")+"₹"+t.amount.toLocaleString("en-IN");
+  value.style.color=t.type==="in"?"green":"#b3261e";
+  row.append(name,value);
+  box.appendChild(row);
+ });
+}
+function showTransactions(){
+ document.getElementById("transactions").scrollIntoView({behavior:"smooth"});
+}
+function showMessage(message){alert(message);}
+updateBalance();
+</script>
+</body>
+</html>
