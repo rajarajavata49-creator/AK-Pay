@@ -4,334 +4,520 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#6426a8">
-<title>phonepe  - Demo Wallet</title>
+<meta name="theme-color" content="#5f259f">
+<title>AK Pay</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f2fa;color:#20152d;font-family:Arial,"Noto Sans Devanagari",sans-serif}
-button,input{font:inherit}
-button{cursor:pointer;border:0}
-.top{background:linear-gradient(135deg,#57218f,#873dd0);color:white;padding:18px 17px 25px;border-radius:0 0 25px 25px}
-.toprow{display:flex;align-items:center;justify-content:space-between}
-.profile{display:flex;align-items:center;gap:11px;background:none;color:white;text-align:left}
-.avatar{width:43px;height:43px;border-radius:50%;background:#fff;color:#6826a7;display:grid;place-items:center;font-size:23px}
-.topicons{display:flex;gap:17px;font-size:23px}
-.demo{font-size:10px;letter-spacing:1px;background:#fff2;border:1px solid #ffffff55;padding:5px 9px;border-radius:20px;display:inline-block;margin-top:17px}
-.balance{margin-top:13px}
-.balance small{opacity:.8}
-.balance h1{font-size:32px;margin:5px 0}
-.balance button{background:#ffffff22;color:white;border:1px solid #ffffff55;padding:7px 12px;border-radius:20px}
-.container{padding:15px;max-width:650px;margin:auto}
-.card{background:white;border-radius:17px;padding:16px;margin-bottom:14px;box-shadow:0 3px 15px #32104b0c}
-.heading{font-size:17px;font-weight:700;margin:4px 0 15px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 5px}
-.action{background:none;color:#30243c;text-align:center;font-size:12px;padding:7px 1px}
-.action .ico{width:48px;height:48px;border-radius:16px;background:#f1e7fc;color:#702bb0;display:grid;place-items:center;font-size:23px;margin:0 auto 8px}
-.sectiongrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.tile{background:#f8f4fc;border-radius:13px;padding:13px 5px;text-align:center;font-size:12px;color:#43265d}
-.tile b{display:block;font-size:23px;margin-bottom:7px}
-.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom));max-width:650px;margin:auto}
-.bottom button{background:none;color:#756b7c;font-size:11px}
-.bottom button span{display:block;font-size:21px;margin-bottom:3px}
-.bottom button.active{color:#762db6;font-weight:bold}
-.tx{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #f0edf2}
-.tx:last-child{border:0}
-.txicon{width:39px;height:39px;border-radius:50%;background:#f1e8fa;display:grid;place-items:center;font-size:19px}
-.txinfo{flex:1;min-width:0}
-.txinfo b{font-size:13px;display:block}
-.txinfo small{color:#877d8e;font-size:11px}
-.amount{font-weight:bold;font-size:14px;text-align:right}
-.demoTag{font-size:9px;color:#8b55b4;display:block;margin-top:3px}
-.overlay{position:fixed;inset:0;background:#160b20a6;z-index:5;display:none;justify-content:center;align-items:flex-end}
+body{margin:0;background:#f5f3f8;color:#241b2d;font-family:Arial,"Noto Sans Devanagari",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+#app{max-width:520px;min-height:100vh;margin:auto;background:#f7f5fa;padding-bottom:78px}
+header{height:62px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 17px;position:sticky;top:0;z-index:5;border-bottom:1px solid #eee}
+.brand{font-size:23px;font-weight:800;color:#5f259f;letter-spacing:-1px}
+.round{width:40px;height:40px;border:0;border-radius:50%;background:#f1eafa;color:#5f259f;display:grid;place-items:center;font-size:19px}
+.screen{display:none;padding:17px}
+.screen.active{display:block}
+h2{font-size:19px;margin:8px 0 15px}
+h3{font-size:16px;margin:0 0 14px}
+.section{margin-bottom:21px}
+.section-title{font-size:17px;font-weight:750;margin:0 0 13px}
+.card{background:#fff;border-radius:17px;padding:16px;margin-bottom:13px;box-shadow:0 2px 9px #26123b08}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px 7px}
+.tile{border:0;background:transparent;padding:5px 1px;display:flex;flex-direction:column;align-items:center;gap:8px;color:#30263a;font-size:12px;min-width:0}
+.ico{width:49px;height:49px;border-radius:16px;background:#f0e8fa;color:#6426a5;display:grid;place-items:center;font-size:22px}
+.ico svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rowtiles{display:flex;overflow-x:auto;gap:13px;padding:2px 0 8px}
+.rowtiles .tile{min-width:76px;max-width:84px}
+.rowtiles::-webkit-scrollbar{display:none}
+.bankrow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #eee}
+.bankrow:last-child{border:0}
+.banklogo{width:42px;height:42px;border-radius:12px;background:#f1eff6;display:grid;place-items:center;color:#5f259f;font-size:12px;font-weight:800}
+.bankname{flex:1;font-size:14px;font-weight:650}
+.smallbtn{border:0;border-radius:20px;background:#6426a5;color:white;padding:9px 17px;font-size:13px}
+.primary{width:100%;border:0;border-radius:12px;background:#6426a5;color:#fff;padding:14px;font-weight:700;margin-top:12px}
+.secondary{width:100%;border:1px solid #6426a5;border-radius:12px;background:#fff;color:#6426a5;padding:12px;font-weight:700;margin-top:10px}
+.field{margin:13px 0}
+.field label{display:block;font-size:13px;color:#62596d;margin-bottom:7px}
+.field input,.field select{width:100%;padding:14px;border:1px solid #ddd6e6;border-radius:11px;background:#fff;outline:none}
+.field input:focus{border-color:#6426a5}
+.hint{font-size:12px;color:#81778b;line-height:1.5}
+.profile-item{width:100%;border:0;background:#fff;text-align:left;padding:15px 12px;border-bottom:1px solid #f0edf3;color:#30263a;font-size:14px}
+.profile-item.red{color:#d52b43;font-weight:700}
+.profile-item.spaced{margin-top:13px;border-radius:12px}
+.profile-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.avatar{width:55px;height:55px;border-radius:50%;background:#eee2fb;color:#6426a5;display:grid;place-items:center;font-size:23px;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);height:67px;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;align-items:center;z-index:8}
+.navbtn{border:0;background:transparent;color:#81788a;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.navbtn b{font-size:20px;font-weight:400}
+.navbtn.active{color:#6426a5;font-weight:700}
+.back{border:0;background:transparent;color:#6426a5;font-size:15px;padding:5px 0 15px}
+.success{text-align:center;padding:25px 10px}
+.success-mark{width:65px;height:65px;border-radius:50%;background:#e2f7eb;color:#168747;display:grid;place-items:center;font-size:32px;margin:10px auto 18px}
+.amount{font-size:30px;font-weight:800;margin:10px}
+.game{border:1px solid #e8e2ee;background:#fff;border-radius:13px;padding:12px 5px;text-align:center;font-size:13px}
+.game.selected{border:2px solid #6426a5;background:#f7f0ff}
+.suggestions{display:flex;gap:8px;flex-wrap:wrap}
+.suggestions button{border:1px solid #d9cce8;background:#f8f3ff;color:#6426a5;padding:9px 14px;border-radius:20px}
+.history-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #eee}
+.history-icon{width:40px;height:40px;border-radius:50%;background:#f0e8fa;color:#6426a5;display:grid;place-items:center}
+.history-text{flex:1}
+.history-text strong{display:block;font-size:14px}
+.history-text small{color:#887e91}
+.positive{color:#168747;font-weight:700}
+.negative{color:#d04444;font-weight:700}
+.overlay{display:none;position:fixed;inset:0;background:#160d20a6;z-index:20;align-items:center;justify-content:center;padding:20px}
 .overlay.show{display:flex}
-.modal{background:white;width:100%;max-width:600px;border-radius:23px 23px 0 0;padding:22px 18px calc(25px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto}
-.modal h2{font-size:20px;margin:0 0 17px}
-.close{float:right;background:#f1edf4;border-radius:50%;width:32px;height:32px;font-size:19px}
-.field{width:100%;padding:13px;border:1px solid #ded5e7;border-radius:11px;margin:7px 0 13px;outline:none;background:white}
-.field:focus{border-color:#8038bd}
-.primary{width:100%;padding:14px;border-radius:12px;background:#702caf;color:white;font-weight:bold;margin-top:8px}
-.secondary{width:100%;padding:13px;border-radius:12px;background:#f1e8f9;color:#63249a;margin-top:9px}
-.menuitem{width:100%;padding:15px 5px;background:white;text-align:left;border-bottom:1px solid #eee;color:#35253f}
-.menuitem span{margin-right:12px}
-.drawerqr{width:125px;height:125px;background:#f3eff7;border:8px solid white;outline:1px solid #ddd;margin:15px auto;display:grid;place-items:center;text-align:center;color:#77518f;font-size:12px}
-.notice{background:#fff7e7;color:#76551c;border-radius:10px;padding:11px;font-size:12px;margin:10px 0}
-.pinbox{font-size:27px;letter-spacing:12px;text-align:center}
-.empty{text-align:center;color:#8b8192;padding:22px 5px}
-.searchbox{width:100%;padding:13px;border-radius:12px;border:1px solid #ddd}
+.modal{width:100%;max-width:390px;background:#fff;border-radius:20px;padding:22px}
+.modal h3{margin-bottom:8px}
+.pininput{text-align:center;letter-spacing:12px;font-size:24px}
+.hidden{display:none!important}
+.notice{background:#f7f2fc;border-radius:10px;padding:10px;color:#6c5b7d;font-size:11px;line-height:1.5;margin-top:12px}
 </style>
 </head>
 <body>
-
-<header class="top">
- <div class="toprow">
-  <button class="profile" onclick="openProfile()">
-   <span class="avatar">👤</span>
-   <span><b>AK Pay</b><br><small>प्रोफाइल देखें ⌄</small></span>
-  </button>
-  <div class="topicons">
-   <button style="background:none;color:white" onclick="showAlerts()">♧</button>
-   <button style="background:none;color:white" onclick="showSearch()">⌕</button>
-  </div>
- </div>
- <span class="demo">● AK PAY DEMO MODE</span>
- <div class="balance">
-  <small>आपका डेमो बैलेंस</small>
-  <h1 id="balance">₹4,500.00</h1>
-  <button onclick="balanceFlow()">◉ बैलेंस चेक करें</button>
- </div>
+<div id="app">
+<header>
+  <button class="round" onclick="showScreen('profile')" aria-label="Profile">♙</button>
+  <div class="brand">AK Pay</div>
+  <button class="round" onclick="showScreen('alerts')" aria-label="Alerts">♧</button>
 </header>
 
-<main class="container" id="homePage">
- <section class="card">
-  <div class="heading">पैसे ट्रांसफर करें</div>
-  <div class="grid">
-   <button class="action" onclick="openTransfer('मोबाइल नंबर पर')"><span class="ico">📱</span>मोबाइल नंबर पर</button>
-   <button class="action" onclick="openTransfer('बैंक और UPI ID')"><span class="ico">🏦</span>बैंक और UPI ID</button>
-   <button class="action" onclick="openTransfer('अपने अकाउंट पर')"><span class="ico">🔁</span>अपने अकाउंट पर</button>
-   <button class="action" onclick="balanceFlow()"><span class="ico">💰</span>बैलेंस चेक करें</button>
+<!-- HOME -->
+<section id="home" class="screen active">
+  <div class="section card">
+    <div class="section-title">पैसे ट्रांसफर करें</div>
+    <div class="rowtiles">
+      <button class="tile" onclick="showScreen('mobile')"><span class="ico">▣</span>मोबाइल नंबर पर</button>
+      <button class="tile" onclick="showScreen('banktransfer')"><span class="ico">▤</span>बैंक और अपने अकाउंट पर</button>
+      <button class="tile" onclick="showScreen('wallet')"><span class="ico">▱</span>AK Pay Wallet पर</button>
+      <button class="tile" onclick="showScreen('checkbalance')"><span class="ico">₹</span>बैलेंस चेक करें</button>
+    </div>
   </div>
- </section>
 
- <section class="card">
-  <div class="heading">रिचार्ज और बिल भुगतान</div>
-  <div class="sectiongrid">
-   <button class="tile" onclick="coming('मोबाइल रिचार्ज')"><b>📲</b>मोबाइल रिचार्ज</button>
-   <button class="tile" onclick="coming('बिजली बिल')"><b>💡</b>बिजली बिल</button>
-   <button class="tile" onclick="coming('लोन रिपेमेंट')"><b>📄</b>लोन रिपेमेंट</button>
-   <button class="tile" onclick="coming('वॉलेट')"><b>👛</b>वॉलेट</button>
-   <button class="tile" onclick="coming('Google Play रिडीम कोड')"><b>🎮</b>Google Play रिडीम कोड</button>
+  <div class="section card">
+    <div class="section-title">रिचार्ज और बिल्स</div>
+    <div class="rowtiles">
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▣</span>मोबाइल रिचार्ज</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▤</span>क्रेडिट कार्ड</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">ϟ</span>बिजली बिल</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▥</span>लोन रीपेमेंट</button>
+    </div>
   </div>
- </section>
 
- <section class="card">
-  <div class="heading">आपकी सुविधाएँ</div>
-  <div class="sectiongrid">
-   <button class="tile" onclick="openProfile()"><b>👤</b>प्रोफाइल</button>
-   <button class="tile" onclick="showHistory()"><b>📜</b>लेनदेन</button>
-   <button class="tile" onclick="coming('सुरक्षा')"><b>🛡️</b>सुरक्षा</button>
+  <div class="section card">
+    <div class="section-title">पर्सनल लोन</div>
+    <div class="rowtiles">
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">₹</span>पर्सनल लोन</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▥</span>म्यूचुअल फंड लोन</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">◇</span>गोल्ड लोन</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▤</span>क्रेडिट स्कोर</button>
+    </div>
   </div>
- </section>
 
- <section class="card">
-  <div class="heading">हाल के डेमो ट्रांजैक्शन</div>
-  <div id="transactions"><div class="empty">अभी कोई डेमो ट्रांजैक्शन नहीं है</div></div>
-  <button class="secondary" onclick="showHistory()">सभी पुराने लेनदेन देखें</button>
- </section>
-</main>
+  <div class="section card">
+    <div class="section-title">गोल्ड और सिल्वर</div>
+    <div class="rowtiles">
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">◆</span>डेली गोल्ड ₹10 के साथ</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">◈</span>गोल्ड खरीदें</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">◇</span>डेली सिल्वर ₹10 के साथ</button>
+    </div>
+  </div>
 
-<main class="container" id="searchPage" style="display:none">
- <section class="card">
-  <div class="heading">सर्च करें</div>
-  <input class="searchbox" id="searchInput" placeholder="यहाँ सर्च करें..." oninput="searchItems()">
-  <div id="searchResults"></div>
- </section>
-</main>
+  <div class="section card">
+    <div class="section-title">इंश्योरेंस</div>
+    <div class="rowtiles">
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">♧</span>बाइक</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▰</span>कार</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">♡</span>हेल्थ</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">♙</span>लाइफ</button>
+    </div>
+  </div>
 
-<main class="container" id="alertPage" style="display:none">
- <section class="card">
-  <div class="heading">अलर्ट और सूचनाएँ</div>
-  <div class="empty">🔔<br>अभी कोई नई सूचना नहीं है</div>
-  <div class="notice">यह AK Pay का डेमो ऐप है। यहाँ दिखाई गई गतिविधियाँ वास्तविक बैंक गतिविधियाँ नहीं हैं।</div>
- </section>
-</main>
+  <div class="section card">
+    <div class="section-title">ऑफर और रिवॉर्ड्स</div>
+    <div class="rowtiles">
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">☆</span>ऑफर</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▧</span>जाने</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▤</span>बांड</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">▣</span>वाउचर</button>
+      <button class="tile" onclick="showScreen('coming')"><span class="ico">◷</span>सब्सक्रिप्शन</button>
+      <button class="tile" onclick="showScreen('googleplay')"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 3.5v17l10-8.5z" fill="#20a464" stroke="none"/><path d="m4 3.5 12 6.7-2 1.8z" fill="#4285f4" stroke="none"/><path d="m4 20.5 12-6.7-2-1.8z" fill="#fbbc04" stroke="none"/><path d="m14 10.2 5.1 2.8-5.1 2.8-2-3z" fill="#ea4335" stroke="none"/></svg></span>Google Play</button>
+    </div>
+  </div>
+</section>
 
-<main class="container" id="historyPage" style="display:none">
- <section class="card">
-  <div class="heading">पुराना लेनदेन देखें</div>
-  <div class="notice">सभी रिकॉर्ड काल्पनिक डेमो एंट्री हैं। इन्हें वास्तविक भुगतान का प्रमाण न मानें।</div>
-  <div id="allTransactions"></div>
- </section>
-</main>
+<!-- PROFILE -->
+<section id="profile" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <div class="profile-head">
+    <div class="avatar" id="avatar">♙</div>
+    <div><strong id="profileName">अपना नाम</strong><div class="hint">AK Pay प्रोफाइल</div></div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <button class="profile-item" onclick="document.getElementById('photoFile').click()">प्रोफाइल एडिट करें · फोटो बदलें</button>
+    <button class="profile-item" onclick="editName()">अपना नाम एडिट करें</button>
+    <button class="profile-item" onclick="showScreen('banksinfo')">बैंक के बारे में</button>
+    <button class="profile-item" onclick="showScreen('coming')">Pay Later / क्रेडिट कार्ड</button>
+    <button class="profile-item" onclick="showScreen('wallet')">AK Pay Wallet</button>
+    <button class="profile-item" onclick="showScreen('coming')">क्रेडिट कार्ड</button>
+    <button class="profile-item" onclick="showScreen('coming')">UPI Circle</button>
+    <button class="profile-item" onclick="showScreen('coming')">UPI Lite</button>
+    <button class="profile-item" onclick="showScreen('coming')">AK Pay Gift Card</button>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;margin-top:14px">
+    <button class="profile-item spaced" onclick="showScreen('coming')">Payment Settings</button>
+    <button class="profile-item" onclick="showScreen('coming')">AutoPay</button>
+    <button class="profile-item" onclick="showScreen('coming')">Fingerprint Manage</button>
+    <button class="profile-item" onclick="showScreen('coming')">International UPI Settings</button>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;margin-top:14px">
+    <button class="profile-item spaced" onclick="showScreen('coming')">Personalization</button>
+    <button class="profile-item" onclick="shareApp()">शेयर करें</button>
+    <button class="profile-item" onclick="showScreen('scanner')">स्कैन करें</button>
+    <button class="profile-item" onclick="showScreen('coming')">Refer and Earn ₹1,200</button>
+    <button class="profile-item" onclick="showScreen('coming')">मदद और सपोर्ट</button>
+    <button class="profile-item" onclick="showScreen('about')">AK Pay के बारे में</button>
+    <button class="profile-item red" onclick="logout()">लॉगआउट</button>
+  </div>
+  <input id="photoFile" type="file" accept="image/*" class="hidden" onchange="changePhoto(event)">
+</section>
+
+<!-- MOBILE TRANSFER -->
+<section id="mobile" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>पैसे भेजें</h2>
+  <div class="card">
+    <div class="field"><label>मोबाइल नंबर या नाम सर्च करें</label><input id="mobileNumber" inputmode="numeric" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर"></div>
+    <button class="primary" onclick="mobileNext()">आगे बढ़ें</button>
+  </div>
+</section>
+<section id="mobileamount" class="screen">
+  <button class="back" onclick="showScreen('mobile')">‹ वापस</button>
+  <h2>रकम दर्ज करें</h2>
+  <div class="card">
+    <div class="hint" id="mobileRecipient"></div>
+    <div class="field"><label>कितने रुपये भेजना चाहते हैं?</label><input id="mobileAmount" type="number" min="1" placeholder="रकम दर्ज करें"></div>
+    <button class="primary" onclick="startMobilePayment()">आगे बढ़ें</button>
+  </div>
+</section>
+
+<!-- BANK TRANSFER -->
+<section id="banktransfer" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>पैसे भेजें</h2>
+  <div class="card">
+    <button class="profile-item" onclick="showScreen('accountform')">बैंक अकाउंट नंबर और IFSC पर</button>
+    <button class="profile-item" onclick="showScreen('upiform')">UPI ID या नंबर पर</button>
+  </div>
+</section>
+<section id="accountform" class="screen">
+  <button class="back" onclick="showScreen('banktransfer')">‹ वापस</button>
+  <h2>बैंक अकाउंट में पैसे भेजें</h2>
+  <div class="card">
+    <div class="field"><label>खाताधारक का नाम</label><input id="accountName" placeholder="नाम"></div>
+    <div class="field"><label>अकाउंट नंबर</label><input id="accountNumber" inputmode="numeric" placeholder="अकाउंट नंबर"></div>
+    <div class="field"><label>IFSC कोड</label><input id="ifsc" placeholder="IFSC कोड"></div>
+    <div class="field"><label>रकम</label><input id="accountAmount" type="number" min="1" placeholder="₹ रकम"></div>
+    <button class="primary" onclick="startBankPayment()">आगे बढ़ें</button>
+  </div>
+</section>
+<section id="upiform" class="screen">
+  <button class="back" onclick="showScreen('banktransfer')">‹ वापस</button>
+  <h2>UPI ID या नंबर पर</h2>
+  <div class="card">
+    <div class="field"><label>UPI ID या मोबाइल नंबर</label><input id="upiTarget" placeholder="नाम@upi या मोबाइल नंबर"></div>
+    <div class="field"><label>रकम</label><input id="upiAmount" type="number" min="1" placeholder="₹ रकम"></div>
+    <button class="primary" onclick="startUpiPayment()">आगे बढ़ें</button>
+  </div>
+</section>
+
+<!-- WALLET -->
+<section id="wallet" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>AK Pay Wallet</h2>
+</section>
+
+<!-- BALANCE CHECK -->
+<section id="checkbalance" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>चेक बैलेंस</h2>
+  <div class="card" id="bankList"></div>
+</section>
+<section id="bankresult" class="screen">
+  <button class="back" onclick="showScreen('checkbalance')">‹ वापस</button>
+  <div class="card success">
+    <div class="success-mark">✓</div>
+    <h2>मनी चेक सफल रहा</h2>
+    <div class="hint" id="resultBank"></div>
+    <div class="amount" id="resultAmount">₹5,000</div>
+    <div class="hint">खाते का सिमुलेटेड बैलेंस</div>
+    <button class="primary" onclick="showScreen('home')">होम पर जाएँ →</button>
+  </div>
+</section>
+
+<!-- GOOGLE PLAY -->
+<section id="googleplay" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>Google Play</h2>
+  <div class="card">
+    <h3>गेम चुनें</h3>
+    <div class="grid4" id="games">
+      <button class="game" onclick="chooseGame(this,'BGMI')">🎮<br>BGMI</button>
+      <button class="game" onclick="chooseGame(this,'Google Gemini')">✦<br>Google Gemini</button>
+      <button class="game" onclick="chooseGame(this,'2 कॉलर')">🎯<br>2 कॉलर</button>
+      <button class="game" onclick="chooseGame(this,'Free Fire')">🔥<br>Free Fire</button>
+      <button class="game" onclick="chooseGame(this,'Bullet Echo')">🎮<br>Bullet Echo</button>
+      <button class="game" onclick="chooseGame(this,'अन्य गेम')">＋<br>अन्य गेम</button>
+    </div>
+    <div class="field"><label>रकम (न्यूनतम ₹10)</label><input id="playAmount" type="number" min="10" placeholder="रकम दर्ज करें"></div>
+    <div class="suggestions">
+      <button onclick="setPlayAmount(40)">₹40</button>
+      <button onclick="setPlayAmount(160)">₹160</button>
+      <button onclick="setPlayAmount(800)">₹800</button>
+      <button onclick="setPlayAmount(5000)">₹5,000</button>
+    </div>
+    <button class="primary" onclick="startPlayCode()">आगे बढ़ें</button>
+  </div>
+</section>
+<section id="playresult" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <div class="card success">
+    <div class="success-mark">✓</div>
+    <h2>कोड तैयार है</h2>
+    <div class="hint" id="codeGame"></div>
+    <div class="amount" id="codeAmount"></div>
+    <div class="card" style="font-size:18px;letter-spacing:2px;font-weight:800;overflow-wrap:anywhere" id="generatedCode"></div>
+    <button class="secondary" onclick="copyCode()">कोड कॉपी करें</button>
+    <div class="hint" style="margin-top:12px">सैंपल कोड · असली रिडीम कोड नहीं</div>
+    <div class="hint" id="codeDate"></div>
+    <button class="primary" onclick="showScreen('home')">होम पर जाएँ</button>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="history" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>पुराने लेनदेन देखें</h2>
+  <div class="card" id="historyList"></div>
+</section>
+<section id="alerts" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>अलर्ट</h2>
+</section>
+<section id="search" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>सर्च करें</h2>
+  <div class="card"><input style="width:100%;padding:13px;border:1px solid #ddd;border-radius:10px" placeholder="सर्च करें"></div>
+</section>
+<section id="scanner" class="screen">
+  <button class="back" onclick="showScreen('profile')">‹ वापस</button>
+  <h2>QR कोड स्कैन करें</h2>
+</section>
+<section id="coming" class="screen">
+  <button class="back" onclick="showScreen('home')">‹ वापस</button>
+  <h2>Coming Soon</h2>
+</section>
+<section id="banksinfo" class="screen">
+  <button class="back" onclick="showScreen('profile')">‹ वापस</button>
+  <h2>बैंक के बारे में</h2>
+  <div class="card hint">बैंक के नाम केवल जानकारी के लिए दिखाए गए हैं। AK Pay का इन बैंकों से कोई आधिकारिक प्रमोशन या साझेदारी नहीं है।</div>
+</section>
+<section id="about" class="screen">
+  <button class="back" onclick="showScreen('profile')">‹ वापस</button>
+  <h2>AK Pay के बारे में</h2>
+  <div class="card hint">AK Pay एक स्वतंत्र वॉलेट सिमुलेशन ऐप है। इसमें दिखने वाला बैलेंस, बैंक खाते, लेनदेन, रिचार्ज और कोड केवल उदाहरण के लिए हैं। कोई वास्तविक बैंक भुगतान, मोबाइल रिचार्ज या Google Play रिडीम कोड जारी नहीं होता। AK Pay किसी बैंक, PhonePe, Google या गेम कंपनी से संबद्ध नहीं है।</div>
+</section>
+</div>
 
 <nav class="bottom">
- <button class="active" id="navHome" onclick="navigate('home')"><span>⌂</span>होम</button>
- <button id="navSearch" onclick="navigate('search')"><span>⌕</span>सर्च करें</button>
- <button id="navAlert" onclick="navigate('alert')"><span>♧</span>अलर्ट</button>
- <button id="navHistory" onclick="navigate('history')"><span>▤</span>लेनदेन</button>
+  <button class="navbtn active" onclick="showScreen('home',this)"><b>⌂</b>होम</button>
+  <button class="navbtn" onclick="showScreen('search',this)"><b>⌕</b>सर्च करें</button>
+  <button class="navbtn" onclick="showScreen('scanner',this)"><b>▦</b>स्कैनर</button>
+  <button class="navbtn" onclick="showScreen('alerts',this)"><b>♧</b>अलर्ट</button>
+  <button class="navbtn" onclick="showScreen('history',this)"><b>◷</b>लेनदेन</button>
 </nav>
 
-<div class="overlay" id="overlay" onclick="outsideClose(event)">
- <div class="modal" id="modal">
-  <button class="close" onclick="closeModal()">×</button>
-  <div id="modalContent"></div>
- </div>
+<div class="overlay" id="pinOverlay">
+  <div class="modal">
+    <h3>UPI PIN दर्ज करें</h3>
+    <p class="hint">आगे बढ़ने के लिए अपना 4 अंकों का ऐप PIN डालें।</p>
+    <div class="field"><input id="pinInput" class="pininput" type="password" inputmode="numeric" maxlength="4" placeholder="••••"></div>
+    <div class="hint" id="pinError"></div>
+    <button class="primary" onclick="confirmPin()">कन्फर्म करें</button>
+    <button class="secondary" onclick="closePin()">रद्द करें</button>
+  </div>
 </div>
 
 <script>
-let balance = Number(localStorage.getItem("ak_demo_balance") || 4500);
-let transactions = JSON.parse(localStorage.getItem("ak_demo_transactions") || "[]");
+let appPin=localStorage.getItem('akpay_pin')||'5555';
+let userName=localStorage.getItem('akpay_name')||'अपना नाम';
+let profilePhoto=localStorage.getItem('akpay_photo')||'';
+let transactions=JSON.parse(localStorage.getItem('akpay_history')||'[]');
+let selectedGame='';
+let pendingAction=null;
+let currentBank='';
+let currentCode='';
 
-function money(n){
- return "₹" + Number(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+const banks=['State Bank of India','Indian Bank','Airtel Payments Bank','Bank of Baroda','Union Bank of India'];
+const bankShort=['SBI','IB','AIRTEL','BOB','UBI'];
+
+function showScreen(id,btn){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ const target=document.getElementById(id);
+ if(target)target.classList.add('active');
+ document.querySelectorAll('.navbtn').forEach(n=>n.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ if(id==='history')renderHistory();
+ if(id==='checkbalance')renderBanks();
 }
-function save(){
- localStorage.setItem("ak_demo_balance",balance);
- localStorage.setItem("ak_demo_transactions",JSON.stringify(transactions));
+function requestPin(action){
+ pendingAction=action;
+ document.getElementById('pinInput').value='';
+ document.getElementById('pinError').textContent='';
+ document.getElementById('pinOverlay').classList.add('show');
+ setTimeout(()=>document.getElementById('pinInput').focus(),100);
 }
-function update(){
- document.getElementById("balance").textContent=money(balance);
- renderTransactions();
+function closePin(){
+ document.getElementById('pinOverlay').classList.remove('show');
+ pendingAction=null;
 }
-function openModal(html){
- document.getElementById("modalContent").innerHTML=html;
- document.getElementById("overlay").classList.add("show");
-}
-function closeModal(){
- document.getElementById("overlay").classList.remove("show");
-}
-function outsideClose(e){
- if(e.target.id==="overlay")closeModal();
-}
-function coming(name){
- openModal(`<h2>${name}</h2><div class="notice">यह सुविधा अभी तैयार नहीं है।</div><p>यह विकल्प AK Pay Demo में Coming Soon है।</p><button class="primary" onclick="closeModal()">ठीक है</button>`);
-}
-function openProfile(){
- openModal(`
- <h2>👤 प्रोफाइल</h2>
- <div style="text-align:center;padding:12px">
- <div class="avatar" style="margin:auto;width:70px;height:70px;font-size:35px">👤</div>
- <h3>AK Pay Demo User</h3>
- <small>प्रोफाइल डिटेल्स अपडेट करें — Coming Soon</small>
- </div>
- <div class="drawerqr">AK PAY<br>DEMO QR<br>स्कैन नहीं किया जा सकता</div>
- <div class="notice">AK Bank · खाता समाप्ति अंक: 0467<br>यह काल्पनिक डेमो अकाउंट है।</div>
- <button class="menuitem" onclick="coming('पेमेंट मैनेज करें')">💳 पेमेंट मैनेज करें</button>
- <button class="menuitem" onclick="coming('शेयर करें')">↗ शेयर करें</button>
- <button class="menuitem" onclick="coming('स्कैन करें')">▦ स्कैन करें</button>
- <button class="menuitem" onclick="coming('लाइक')">♡ लाइक</button>
- <button class="menuitem" onclick="coming('सुरक्षा')">🛡️ सुरक्षा</button>
- <button class="menuitem" onclick="coming('हेल्प और सपोर्ट')">❔ हेल्प और सपोर्ट</button>
- <button class="menuitem" onclick="coming('About AK Pay')">ⓘ About AK Pay</button>
- <button class="menuitem" onclick="coming('लॉग आउट')">⇥ लॉग आउट</button>
- <hr>
- <h3>डेवलपर कंट्रोल — डेमो मनी एडिट करें</h3>
- <p>मौजूदा बैलेंस: <b>${money(balance)}</b></p>
- <input class="field" type="number" id="editAmount" placeholder="रकम दर्ज करें">
- <button class="primary" onclick="editMoney(1)">＋ डेमो मनी जोड़ें</button>
- <button class="secondary" onclick="editMoney(-1)">－ डेमो मनी घटाएँ</button>
- `);
-}
-function editMoney(direction){
- let amount=Number(document.getElementById("editAmount").value);
- if(!amount || amount<=0){alert("सही रकम दर्ज करें");return}
- if(direction<0 && amount>balance){alert("बैलेंस से ज्यादा रकम नहीं घटा सकते");return}
- balance+=amount*direction;
- save();update();openProfile();
-}
-function balanceFlow(){
- openModal(`
- <h2>बैलेंस चेक करें</h2>
- <div class="notice">डेमो बैंक अकाउंट · कोई वास्तविक बैंक कनेक्शन नहीं</div>
- <button class="menuitem" style="background:#f8f3fc;border-radius:12px" onclick="pinScreen()">🏦 AK Bank<br><small>खाता समाप्ति अंक: 0467</small></button>
- `);
-}
-function pinScreen(){
- openModal(`
- <h2>अपना PIN डायल करें</h2>
- <p style="text-align:center;color:#796e80">AK Bank · Demo Account ****0467</p>
- <input class="field pinbox" id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
- <button class="primary" onclick="checkPin()">जारी रखें</button>
- <p style="text-align:center;font-size:11px;color:#999">डेमो PIN केवल इस ऐप के परीक्षण के लिए है।</p>
- `);
-}
-function checkPin(){
- let pin=document.getElementById("pinInput").value;
- if(pin!=="2487"){
-  openModal(`<h2>गलत PIN</h2><div class="notice">Wrong PIN — कृपया सही डेमो PIN डालें।</div><button class="primary" onclick="pinScreen()">दोबारा कोशिश करें</button>`);
+function confirmPin(){
+ if(document.getElementById('pinInput').value!==appPin){
+  document.getElementById('pinError').textContent='गलत PIN, कृपया दोबारा कोशिश करें';
+  document.getElementById('pinInput').value='';
   return;
  }
- openModal(`
- <div style="text-align:center;padding:15px">
- <div style="font-size:48px">✓</div>
- <h2>बैलेंस चेक सफल रहा</h2>
- <p>AK Bank · ****0467</p>
- <h1 style="color:#702caf">${money(balance)}</h1>
- <div class="notice">यह केवल डेमो बैलेंस है, वास्तविक बैंक बैलेंस नहीं।</div>
- <button class="primary" onclick="closeModal()">ठीक है</button>
- </div>`);
+ const action=pendingAction;
+ closePin();
+ if(action)action();
 }
-function openTransfer(type){
- openModal(`
- <h2>${type}</h2>
- <div class="notice">यह केवल काल्पनिक डेमो ट्रांसफर है। कोई पैसा वास्तव में नहीं भेजा जाएगा।</div>
- <label>प्राप्तकर्ता का नाम</label>
- <input class="field" id="receiver" placeholder="नाम लिखें">
- <label>${type==="मोबाइल नंबर पर"?"मोबाइल नंबर":type==="बैंक और UPI ID"?"बैंक / UPI ID":"अपने अकाउंट का नाम"}</label>
- <input class="field" id="destination" placeholder="जानकारी लिखें">
- <label>रकम (₹)</label>
- <input class="field" id="transferAmount" type="number" min="1" placeholder="रकम लिखें">
- <button class="primary" onclick="confirmTransfer()">डेमो ट्रांसफर जारी रखें</button>
- `);
+function mobileNext(){
+ const n=document.getElementById('mobileNumber').value.trim();
+ if(!/^[0-9]{10}$/.test(n)){alert('कृपया 10 अंकों का मोबाइल नंबर डालें');return}
+ document.getElementById('mobileRecipient').textContent='मोबाइल नंबर: '+n;
+ showScreen('mobileamount');
 }
-function confirmTransfer(){
- let name=document.getElementById("receiver").value.trim()||"डेमो प्राप्तकर्ता";
- let dest=document.getElementById("destination").value.trim();
- let amount=Number(document.getElementById("transferAmount").value);
- if(!dest || !amount || amount<=0){alert("सभी जानकारी सही भरें");return}
- if(amount>balance){alert("डेमो बैलेंस पर्याप्त नहीं है");return}
- openModal(`
- <h2>डेमो ट्रांसफर की पुष्टि</h2>
- <div class="notice">यह वास्तविक भुगतान नहीं है।</div>
- <p>प्राप्तकर्ता: <b>${escapeHTML(name)}</b></p>
- <p>जानकारी: ${escapeHTML(dest)}</p>
- <h2>${money(amount)}</h2>
- <button class="primary" onclick="finishTransfer('${encodeURIComponent(name)}',${amount})">डेमो पुष्टि करें</button>
- `);
+function startMobilePayment(){
+ const n=document.getElementById('mobileNumber').value.trim();
+ const a=Number(document.getElementById('mobileAmount').value);
+ if(!Number.isFinite(a)||a<1){alert('सही रकम दर्ज करें');return}
+ requestPin(()=>finishPayment('मोबाइल रिचार्ज',n,a));
 }
-function finishTransfer(encodedName,amount){
- let name=decodeURIComponent(encodedName);
- balance-=amount;
- addTransaction("भेजे गए डेमो पैसे",name,amount,"out");
- save();update();
- openModal(`<div style="text-align:center"><div style="font-size:50px">✓</div><h2>डेमो ट्रांसफर पूरा हुआ</h2><h1>${money(amount)}</h1><div class="notice">DEMO ONLY — कोई वास्तविक भुगतान नहीं हुआ।</div><button class="primary" onclick="closeModal()">बंद करें</button></div>`);
+function startBankPayment(){
+ const name=document.getElementById('accountName').value.trim();
+ const acc=document.getElementById('accountNumber').value.trim();
+ const ifsc=document.getElementById('ifsc').value.trim();
+ const a=Number(document.getElementById('accountAmount').value);
+ if(!name||!acc||!ifsc||a<1){alert('सभी जानकारी सही भरें');return}
+ requestPin(()=>finishPayment('बैंक ट्रांसफर',name,a));
 }
-function addTransaction(title,name,amount,type){
- transactions.unshift({
-  title,name,amount,type,
-  date:new Date().toLocaleString("hi-IN"),
-  id:"AKDEMO-"+Date.now()
- });
- transactions=transactions.slice(0,50);
+function startUpiPayment(){
+ const target=document.getElementById('upiTarget').value.trim();
+ const a=Number(document.getElementById('upiAmount').value);
+ if(!target||a<1){alert('सही जानकारी भरें');return}
+ requestPin(()=>finishPayment('UPI ट्रांसफर',target,a));
 }
-function transactionHTML(t){
- let incoming=t.type==="in";
- return `<div class="tx">
- <div class="txicon">${incoming?"↓":"↑"}</div>
- <div class="txinfo"><b>${escapeHTML(t.title)}</b><small>${escapeHTML(t.name)} · ${escapeHTML(t.date)}</small><small class="demoTag">DEMO ENTRY · वास्तविक भुगतान नहीं</small></div>
- <div class="amount" style="color:${incoming?"#16834c":"#bd3c51"}">${incoming?"+":"−"}${money(t.amount)}</div>
- </div>`;
+function finishPayment(type,to,amount){
+ addHistory(type,to,amount,'out');
+ showReceipt(type,to,amount);
 }
-function renderTransactions(){
- let html=transactions.length?transactions.map(transactionHTML).join(""):'<div class="empty">अभी कोई डेमो ट्रांजैक्शन नहीं है</div>';
- document.getElementById("transactions").innerHTML=html;
- document.getElementById("allTransactions").innerHTML=html;
+function showReceipt(type,to,amount){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ const sec=document.createElement('section');
+ sec.className='screen active';
+ sec.id='receipt';
+ sec.innerHTML='<button class="back" onclick="showScreen(\\'home\\')">‹ होम</button><div class="card success"><div class="success-mark">✓</div><h2>'+type+' सफल</h2><div class="amount">₹'+amount.toLocaleString('en-IN')+'</div><p>'+escapeHTML(to)+'</p><div class="hint">यह केवल AK Pay सिमुलेशन की रसीद है। वास्तविक भुगतान नहीं हुआ।</div><button class="primary" onclick="showScreen(\\'home\\')">होम पर जाएँ</button></div>';
+ document.getElementById('app').insertBefore(sec,document.querySelector('.bottom'));
 }
-function showHistory(){navigate("history")}
-function showAlerts(){navigate("alert")}
-function showSearch(){navigate("search")}
-function navigate(page){
- ["home","search","alert","history"].forEach(p=>{
-  document.getElementById(p+"Page").style.display=p===page?"block":"none";
-  document.getElementById("nav"+p.charAt(0).toUpperCase()+p.slice(1)).classList.toggle("active",p===page);
+function renderBanks(){
+ const box=document.getElementById('bankList');
+ box.innerHTML='';
+ banks.forEach((b,i)=>{
+  const row=document.createElement('div');
+  row.className='bankrow';
+  row.innerHTML='<div class="banklogo">'+bankShort[i]+'</div><div class="bankname">'+b+'</div><button class="smallbtn">चेक करें</button>';
+  row.querySelector('button').onclick=()=>{currentBank=b;requestPin(()=>{document.getElementById('resultBank').textContent=currentBank;document.getElementById('resultAmount').textContent='₹5,000';showScreen('bankresult');});};
+  box.appendChild(row);
  });
 }
-function searchItems(){
- let q=document.getElementById("searchInput").value.toLowerCase();
- let items=["मोबाइल नंबर पर पैसे ट्रांसफर","बैंक और UPI ID","अपने अकाउंट पर","बैलेंस चेक करें","मोबाइल रिचार्ज","बिजली बिल","लोन रिपेमेंट","वॉलेट","Google Play रिडीम कोड","पुराना लेनदेन","प्रोफाइल"];
- document.getElementById("searchResults").innerHTML=items.filter(x=>x.toLowerCase().includes(q)).map(x=>`<button class="menuitem" onclick="searchAction('${x}')">${x}　›</button>`).join("")||'<div class="empty">कोई परिणाम नहीं मिला</div>';
+function chooseGame(el,name){
+ selectedGame=name;
+ document.querySelectorAll('.game').forEach(g=>g.classList.remove('selected'));
+ el.classList.add('selected');
 }
-function searchAction(x){
- if(x.includes("बैलेंस"))balanceFlow();
- else if(x.includes("लेनदेन"))showHistory();
- else if(x.includes("प्रोफाइल"))openProfile();
- else if(x.includes("ट्रांसफर")){
-  openTransfer(x.includes("मोबाइल")?"मोबाइल नंबर पर":x.includes("बैंक")?"बैंक और UPI ID":"अपने अकाउंट पर");
- }else coming(x);
+function setPlayAmount(a){document.getElementById('playAmount').value=a}
+function startPlayCode(){
+ const amount=Number(document.getElementById('playAmount').value);
+ if(!selectedGame){alert('पहले गेम चुनें');return}
+ if(!Number.isFinite(amount)||amount<10){alert('कम से कम ₹10 दर्ज करें');return}
+ requestPin(()=>{
+  const code='GP-'+randomPart(4)+'-'+randomPart(4)+'-'+randomPart(4);
+  currentCode=code;
+  addHistory('Google Play सैंपल कोड',selectedGame,amount,'out');
+  document.getElementById('codeGame').textContent=selectedGame;
+  document.getElementById('codeAmount').textContent='₹'+amount.toLocaleString('en-IN');
+  document.getElementById('generatedCode').textContent=code;
+  document.getElementById('codeDate').textContent=new Date().toLocaleString('hi-IN');
+  showScreen('playresult');
+ });
+}
+function randomPart(len){
+ const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+ let s='';
+ for(let i=0;i<len;i++)s+=chars[Math.floor(Math.random()*chars.length)];
+ return s;
+}
+function copyCode(){
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(currentCode).then(()=>alert('कोड कॉपी हो गया'));
+ }else{alert(currentCode)}
+}
+function addHistory(type,to,amount,direction){
+ transactions.unshift({type,to,amount,direction,date:new Date().toLocaleString('hi-IN')});
+ localStorage.setItem('akpay_history',JSON.stringify(transactions));
+}
+function renderHistory(){
+ const box=document.getElementById('historyList');
+ if(!transactions.length){box.innerHTML='<p class="hint">अभी कोई लेनदेन नहीं है।</p>';return}
+ box.innerHTML='';
+ transactions.forEach(t=>{
+  const row=document.createElement('div');
+  row.className='history-row';
+  const sign=t.direction==='in'?'+':'−';
+  row.innerHTML='<div class="history-icon">'+(t.direction==='in'?'↓':'↑')+'</div><div class="history-text"><strong>'+escapeHTML(t.type)+'</strong><small>'+escapeHTML(t.to)+' · '+escapeHTML(t.date)+'</small></div><div class="'+(t.direction==='in'?'positive':'negative')+'">'+sign+'₹'+Number(t.amount).toLocaleString('en-IN')+'</div>';
+  box.appendChild(row);
+ });
 }
 function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-update();
+function editName(){
+ const n=prompt('अपना नाम लिखें',userName);
+ if(n&&n.trim()){userName=n.trim();localStorage.setItem('akpay_name',userName);updateProfile()}
+}
+function updateProfile(){
+ document.getElementById('profileName').textContent=userName;
+ const av=document.getElementById('avatar');
+ av.innerHTML=profilePhoto?'<img src="'+profilePhoto+'">':'♙';
+}
+function changePhoto(e){
+ const f=e.target.files[0];
+ if(!f)return;
+ if(f.size>2*1024*1024){alert('फोटो 2 MB से छोटी रखें');return}
+ const reader=new FileReader();
+ reader.onload=()=>{profilePhoto=reader.result;localStorage.setItem('akpay_photo',profilePhoto);updateProfile()};
+ reader.readAsDataURL(f);
+}
+function shareApp(){
+ if(navigator.share)navigator.share({title:'AK Pay',text:'AK Pay'});
+ else alert('AK Pay');
+}
+function logout(){
+ if(confirm('क्या आप लॉगआउट करना चाहते हैं?'))showScreen('home');
+}
+updateProfile();
+renderHistory();
 </script>
 </body>
 </html>
