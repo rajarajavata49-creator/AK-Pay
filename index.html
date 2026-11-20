@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -9,121 +8,213 @@
 <title>AK Pay - Demo Wallet</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f3f0f8;font-family:Arial,sans-serif;color:#24202b}
+body{margin:0;background:#f4f1f8;font-family:Arial,sans-serif;color:#282331}
+button{font-family:inherit;cursor:pointer}
+.demo{background:#fff0cf;color:#754900;text-align:center;padding:8px;font-size:11px;font-weight:700}
 header{background:#5f1595;color:white;padding:17px 16px;display:flex;align-items:center;justify-content:space-between}
-.profile{display:flex;align-items:center;gap:10px}
-.avatar{background:white;color:#5f1595;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;font-weight:bold}
-.header-icons{display:flex;gap:17px;font-size:21px}
-.demo{background:#fff0cf;color:#754900;text-align:center;padding:7px;font-size:12px;font-weight:bold}
-main{max-width:520px;margin:auto;padding:12px 12px 85px}
-.banner{background:linear-gradient(120deg,#6c2bb1,#a77be1);color:white;border-radius:14px;padding:19px;margin-bottom:14px;min-height:125px}
-.banner small{opacity:.85}
-.banner h2{font-size:20px;margin:9px 0}
-.card{background:white;border-radius:14px;padding:15px;margin-bottom:13px;box-shadow:0 2px 8px #26104412}
-.section-title{font-weight:bold;font-size:16px;margin-bottom:15px}
-.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
-.action{border:0;background:transparent;color:#292333;font-size:12px;cursor:pointer;padding:5px 2px}
-.action-icon{margin:0 auto 8px;background:#641a9e;color:white;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:22px}
-.upi{background:#f3effb;padding:13px;border-radius:9px;margin-top:14px;font-size:12px;display:flex;justify-content:space-between}
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.tile{background:#4b83d1;color:white;border-radius:12px;padding:16px 5px;text-align:center;font-size:12px}
-.tile b{display:block;font-size:22px;margin-bottom:7px}
-.services{display:grid;grid-template-columns:repeat(4,1fr);gap:17px 5px;text-align:center}
-.service{font-size:11px;line-height:1.4}
-.service span{display:block;font-size:25px;color:#5f1595;margin-bottom:6px}
-.balance{font-size:26px;font-weight:bold;color:#5f1595;margin:8px 0}
+.profile{display:flex;align-items:center;gap:11px}
+.avatar{background:white;color:#5f1595;border-radius:50%;width:42px;height:42px;display:grid;place-items:center;font-weight:bold;font-size:16px}
+.header-icons{display:flex;align-items:center;gap:17px}
+.header-icons button{background:none;border:0;color:white;padding:3px}
+main{max-width:520px;margin:auto;padding:13px 12px 100px}
+.banner{background:linear-gradient(120deg,#60209b,#a77be1);color:white;border-radius:16px;padding:20px;margin-bottom:14px;min-height:132px}
+.banner small{opacity:.85;font-size:11px;letter-spacing:.5px}
+.banner h2{font-size:20px;margin:10px 0}
+.banner p{font-size:13px;margin:0;opacity:.9}
+.card{background:white;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px #2610440c}
+.section-title{font-weight:700;font-size:16px;margin-bottom:17px}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;text-align:center}
+.action{border:0;background:transparent;color:#302a38;font-size:11px;line-height:1.4;padding:4px 1px}
+.action-icon{margin:0 auto 9px;background:#f0e7fa;color:#641a9e;width:51px;height:51px;border-radius:50%;display:grid;place-items:center}
+.icon{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.action-icon .icon{width:25px;height:25px}
+.upi{background:#f5f0fa;padding:13px;border-radius:10px;margin-top:16px;font-size:12px;display:flex;justify-content:space-between;align-items:center;color:#4e3a60}
+.upi b{font-size:22px;color:#641a9e}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+.tile{background:#4b83d1;color:white;border:0;border-radius:13px;padding:15px 5px;text-align:center;font-size:12px}
+.tile:nth-child(2){background:#6d4ac1}
+.tile:nth-child(3){background:#287fa7}
+.tile .icon{display:block;margin:0 auto 8px;width:27px;height:27px}
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:19px 5px;text-align:center}
+.service{border:0;background:transparent;color:#302a38;font-size:11px;line-height:1.4;padding:0 2px}
+.service-icon{width:49px;height:49px;margin:0 auto 7px;border-radius:50%;background:#f1eafa;color:#641a9e;display:grid;place-items:center}
+.service-icon .icon{width:23px;height:23px}
+.balance{font-size:28px;font-weight:bold;color:#5f1595;margin:9px 0}
 .muted{font-size:12px;color:#777}
-.transaction{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee;font-size:13px}
+.transaction{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #eee;font-size:13px}
 .transaction:last-child{border:0}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:white;box-shadow:0 -2px 10px #0001;display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom));z-index:5}
-.bottom button{border:0;background:none;color:#777;font-size:11px}
-.bottom button span{display:block;font-size:20px;margin-bottom:4px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;box-shadow:0 -2px 12px #00000012;display:flex;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:5}
+.bottom button{border:0;background:none;color:#777;font-size:11px;min-width:55px}
+.bottom button span{display:grid;place-items:center;margin-bottom:4px}
+.bottom button .icon{width:22px;height:22px}
 .bottom button.active{color:#5f1595;font-weight:bold}
-button{cursor:pointer}
 .modal{display:none;position:fixed;inset:0;background:#0008;z-index:10;align-items:center;justify-content:center;padding:18px}
-.modal-box{background:white;border-radius:16px;padding:20px;width:100%;max-width:380px}
-.modal-box h3{margin-top:0}
-.modal-box input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:9px;font-size:16px}
-.primary{background:#641a9e;color:white;border:0;border-radius:9px;padding:12px;width:100%;margin-top:9px;font-size:15px}
-.secondary{background:#eee;color:#333;border:0;border-radius:9px;padding:11px;width:100%;margin-top:8px}
+.modal-box{background:white;border-radius:18px;padding:21px;width:100%;max-width:380px}
+.modal-box h3{margin-top:0;color:#3b244c}
+.modal-box input{width:100%;padding:13px;margin:8px 0;border:1px solid #ddd;border-radius:10px;font-size:16px}
+.primary{background:#641a9e;color:white;border:0;border-radius:10px;padding:13px;width:100%;margin-top:9px;font-size:15px;font-weight:bold}
+.secondary{background:#eee;color:#333;border:0;border-radius:10px;padding:12px;width:100%;margin-top:8px}
 .note{font-size:11px;color:#777;line-height:1.5}
 </style>
 </head>
 <body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="i-qr" viewBox="0 0 24 24">
+<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/>
+</symbol>
+<symbol id="i-bell" viewBox="0 0 24 24">
+<path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>
+</symbol>
+<symbol id="i-help" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-1.2 1.1-1.7 1.4-1.7 3M12 17h.01"/>
+</symbol>
+<symbol id="i-mobile" viewBox="0 0 24 24">
+<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 5h4M11 18h2"/>
+</symbol>
+<symbol id="i-bank" viewBox="0 0 24 24">
+<path d="m3 9 9-6 9 6M4 10h16M5 10v9M9 10v9M15 10v9M19 10v9M3 20h18"/>
+</symbol>
+<symbol id="i-transfer" viewBox="0 0 24 24">
+<path d="M4 7h15l-3-3M20 17H5l3 3"/>
+</symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24">
+<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 8h18M16 14h.01M6 5V3h12v2"/>
+</symbol>
+<symbol id="i-gift" viewBox="0 0 24 24">
+<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M2 9h20v4H2zM12 9v12M12 9H7a2 2 0 1 1 2-2c0 2 3 2 3 2ZM12 9h5a2 2 0 1 0-2-2c0 2-3 2-3 2Z"/>
+</symbol>
+<symbol id="i-users" viewBox="0 0 24 24">
+<circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M18 15a5 5 0 0 1 3 5"/>
+</symbol>
+<symbol id="i-electric" viewBox="0 0 24 24">
+<path d="M13 2 5 13h6l-1 9 9-12h-6z"/>
+</symbol>
+<symbol id="i-tv" viewBox="0 0 24 24">
+<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m8 2 4 3 4-3M9 22h6"/>
+</symbol>
+<symbol id="i-card" viewBox="0 0 24 24">
+<rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 9h20M6 15h5"/>
+</symbol>
+<symbol id="i-home" viewBox="0 0 24 24">
+<path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7"/>
+</symbol>
+<symbol id="i-rent" viewBox="0 0 24 24">
+<path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7"/>
+</symbol>
+<symbol id="i-loan" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="9"/><path d="M15 8H9l-1 4h6l-1 4H7M12 5v14"/>
+</symbol>
+<symbol id="i-cylinder" viewBox="0 0 24 24">
+<rect x="6" y="5" width="12" height="17" rx="4"/><path d="M9 5V3h6v2M10 9h4M9 14h6"/>
+</symbol>
+<symbol id="i-more" viewBox="0 0 24 24">
+<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>
+</symbol>
+<symbol id="i-history" viewBox="0 0 24 24">
+<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 7v5l4 2"/>
+</symbol>
+<symbol id="i-user" viewBox="0 0 24 24">
+<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
+</symbol>
+</svg>
+
 <div class="demo">DEMO WALLET • केवल काल्पनिक पैसे • कोई असली भुगतान नहीं</div>
+
 <header>
-  <div class="profile">
-    <div class="avatar">AK</div>
-    <div><b>AK Pay</b><br><small>Demo Account</small></div>
-  </div>
-  <div class="header-icons">
-    <span onclick="showMessage('यह केवल डेमो QR स्क्रीन है।')">▦</span>
-    <span onclick="showMessage('अभी कोई नई सूचना नहीं है।')">♧</span>
-    <span onclick="showMessage('AK Pay Demo Help')">ⓘ</span>
-  </div>
-</header>
-<main>
-  <section class="banner">
-    <small>WELCOME TO AK PAY</small>
-    <h2>आपका अपना Demo Wallet</h2>
-    <p>सीखने और ऐप का अनुभव करने के लिए।</p>
-  </section>
-  <section class="card">
-    <div class="section-title">Transfer Money</div>
-    <div class="actions">
-      <button class="action" onclick="openModal('send')"><div class="action-icon">♙</div>To Mobile<br>Number</button>
-      <button class="action" onclick="openModal('send')"><div class="action-icon">⌂</div>To Bank/<br>UPI ID</button>
-      <button class="action" onclick="openModal('self')"><div class="action-icon">◷</div>To Self<br>Account</button>
-      <button class="action" onclick="showMessage('डेमो बैलेंस: ₹'+balance.toLocaleString('en-IN'))"><div class="action-icon">▤</div>Check<br>Balance</button>
-    </div>
-    <div class="upi"><span>My Demo ID: akdemo@wallet</span><b>›</b></div>
-  </section>
-  <div class="tiles">
-    <div class="tile" onclick="openModal('add')"><b>▣</b>AK Wallet</div>
-    <div class="tile" onclick="showMessage('डेमो रिवॉर्ड अभी उपलब्ध नहीं है।')"><b>🎁</b>Rewards</div>
-    <div class="tile" onclick="showMessage('यह डेमो फीचर है।')"><b>♧</b>Refer & Earn</div>
-  </div>
-  <section class="card" style="margin-top:13px">
-    <div class="section-title">Recharge & Pay Bills</div>
-    <div class="services">
-      <div class="service" onclick="showMessage('मोबाइल रिचार्ज केवल डेमो है।')"><span>▣</span>Mobile<br>Recharge</div>
-      <div class="service" onclick="showMessage('DTH सेवा डेमो है।')"><span>◉</span>DTH</div>
-      <div class="service" onclick="showMessage('बिजली बिल भुगतान उपलब्ध नहीं है।')"><span>♧</span>Electricity</div>
-      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>▤</span>Credit Card<br>Bill</div>
-      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>⌂</span>Rent<br>Payment</div>
-      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>₹</span>Loan<br>Repayment</div>
-      <div class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span>▥</span>Book a<br>Cylinder</div>
-      <div class="service" onclick="showMessage('और डेमो सेवाएँ जल्द आएँगी।')"><span>➜</span>See All</div>
-    </div>
-  </section>
-  <section class="card">
-    <div class="section-title">My Demo Wallet</div>
-    <div class="muted">Available fictional balance</div>
-    <div class="balance" id="balance">₹50,000</div>
-    <button class="primary" onclick="openModal('add')">+ Add Demo Money</button>
-    <p class="note">यह बैलेंस केवल इस डेमो ऐप में है। इसका कोई वास्तविक मौद्रिक मूल्य नहीं है।</p>
-  </section>
-  <section class="card">
-    <div class="section-title">Recent Transactions</div>
-    <div id="transactions"><div class="muted">अभी कोई ट्रांजैक्शन नहीं है।</div></div>
-  </section>
-</main>
-<nav class="bottom">
-  <button class="active" onclick="showMessage('आप Home स्क्रीन पर हैं।')"><span>⌂</span>Home</button>
-  <button onclick="showTransactions()"><span>▤</span>History</button>
-  <button onclick="showMessage('AK Pay Demo Help')"><span>ⓘ</span>Help</button>
-  <button onclick="showMessage('Profile: Demo User')"><span>♙</span>Profile</button>
-</nav>
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h3 id="modalTitle">Demo Wallet</h3>
-    <p class="note">यह केवल काल्पनिक लेन-देन है।</p>
-    <input id="amount" type="number" min="1" placeholder="राशि लिखें (₹)">
-    <input id="receiver" type="text" placeholder="डेमो यूज़र का नाम (वैकल्पिक)" style="display:none">
-    <button class="primary" onclick="confirmAction()">Confirm Demo</button>
-    <button class="secondary" onclick="closeModal()">Cancel</button>
-  </div>
+<div class="profile">
+<div class="avatar">AK</div>
+<div><b>AK Pay</b><br><small>Demo Account</small></div>
 </div>
+<div class="header-icons">
+<button onclick="showMessage('यह केवल डेमो QR स्क्रीन है।')" aria-label="QR"><svg class="icon"><use href="#i-qr"/></svg></button>
+<button onclick="showMessage('अभी कोई नई सूचना नहीं है।')" aria-label="Notifications"><svg class="icon"><use href="#i-bell"/></svg></button>
+<button onclick="showMessage('AK Pay Demo Help')" aria-label="Help"><svg class="icon"><use href="#i-help"/></svg></button>
+</div>
+</header>
+
+<main>
+<section class="banner">
+<small>WELCOME TO AK PAY</small>
+<h2>आपका अपना Demo Wallet</h2>
+<p>सीखने और ऐप का अनुभव करने के लिए।</p>
+</section>
+
+<section class="card">
+<div class="section-title">Transfer Money</div>
+<div class="actions">
+<button class="action" onclick="openModal('send')">
+<div class="action-icon"><svg class="icon"><use href="#i-mobile"/></svg></div>
+To Mobile<br>Number
+</button>
+<button class="action" onclick="openModal('send')">
+<div class="action-icon"><svg class="icon"><use href="#i-bank"/></svg></div>
+To Bank/<br>UPI ID
+</button>
+<button class="action" onclick="openModal('self')">
+<div class="action-icon"><svg class="icon"><use href="#i-transfer"/></svg></div>
+To Self<br>Account
+</button>
+<button class="action" onclick="showMessage('डेमो बैलेंस: ₹'+balance.toLocaleString('en-IN'))">
+<div class="action-icon"><svg class="icon"><use href="#i-wallet"/></svg></div>
+Check<br>Balance
+</button>
+</div>
+<div class="upi"><span>My Demo ID: akdemo@wallet</span><b>›</b></div>
+</section>
+
+<div class="tiles">
+<button class="tile" onclick="openModal('add')"><svg class="icon"><use href="#i-wallet"/></svg>AK Wallet</button>
+<button class="tile" onclick="showMessage('डेमो रिवॉर्ड अभी उपलब्ध नहीं है।')"><svg class="icon"><use href="#i-gift"/></svg>Rewards</button>
+<button class="tile" onclick="showMessage('यह डेमो फीचर है।')"><svg class="icon"><use href="#i-users"/></svg>Refer & Earn</button>
+</div>
+
+<section class="card">
+<div class="section-title">Recharge & Pay Bills</div>
+<div class="services">
+<button class="service" onclick="showMessage('मोबाइल रिचार्ज केवल डेमो है।')"><span class="service-icon"><svg class="icon"><use href="#i-mobile"/></svg></span>Mobile<br>Recharge</button>
+<button class="service" onclick="showMessage('DTH सेवा डेमो है।')"><span class="service-icon"><svg class="icon"><use href="#i-tv"/></svg></span>DTH</button>
+<button class="service" onclick="showMessage('बिजली बिल भुगतान उपलब्ध नहीं है।')"><span class="service-icon"><svg class="icon"><use href="#i-electric"/></svg></span>Electricity</button>
+<button class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span class="service-icon"><svg class="icon"><use href="#i-card"/></svg></span>Credit Card<br>Bill</button>
+<button class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span class="service-icon"><svg class="icon"><use href="#i-rent"/></svg></span>Rent<br>Payment</button>
+<button class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span class="service-icon"><svg class="icon"><use href="#i-loan"/></svg></span>Loan<br>Repayment</button>
+<button class="service" onclick="showMessage('यह डेमो विकल्प है।')"><span class="service-icon"><svg class="icon"><use href="#i-cylinder"/></svg></span>Book a<br>Cylinder</button>
+<button class="service" onclick="showMessage('और डेमो सेवाएँ जल्द आएँगी।')"><span class="service-icon"><svg class="icon"><use href="#i-more"/></svg></span>See All</button>
+</div>
+</section>
+
+<section class="card">
+<div class="section-title">My Demo Wallet</div>
+<div class="muted">Available fictional balance</div>
+<div class="balance" id="balance">₹50,000</div>
+<button class="primary" onclick="openModal('add')">+ Add Demo Money</button>
+<p class="note">यह बैलेंस केवल इस डेमो ऐप में है। इसका कोई वास्तविक मौद्रिक मूल्य नहीं है।</p>
+</section>
+
+<section class="card">
+<div class="section-title">Recent Transactions</div>
+<div id="transactions"><div class="muted">अभी कोई ट्रांजैक्शन नहीं है।</div></div>
+</section>
+</main>
+
+<nav class="bottom">
+<button class="active" onclick="showMessage('आप Home स्क्रीन पर हैं।')"><span><svg class="icon"><use href="#i-home"/></svg></span>Home</button>
+<button onclick="showTransactions()"><span><svg class="icon"><use href="#i-history"/></svg></span>History</button>
+<button onclick="showMessage('AK Pay Demo Help')"><span><svg class="icon"><use href="#i-help"/></svg></span>Help</button>
+<button onclick="showMessage('Profile: Demo User')"><span><svg class="icon"><use href="#i-user"/></svg></span>Profile</button>
+</nav>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<h3 id="modalTitle">Demo Wallet</h3>
+<p class="note">यह केवल काल्पनिक लेन-देन है।</p>
+<input id="amount" type="number" min="1" placeholder="राशि लिखें (₹)">
+<input id="receiver" type="text" placeholder="डेमो यूज़र का नाम (वैकल्पिक)" style="display:none">
+<button class="primary" onclick="confirmAction()">Confirm Demo</button>
+<button class="secondary" onclick="closeModal()">Cancel</button>
+</div>
+</div>
+
 <script>
 let balance=50000;
 let transactions=[];
@@ -132,6 +223,7 @@ let currentAction="add";
 function updateBalance(){
  document.getElementById("balance").textContent="₹"+balance.toLocaleString("en-IN");
 }
+
 function openModal(action){
  currentAction=action;
  document.getElementById("amount").value="";
@@ -140,47 +232,73 @@ function openModal(action){
  document.getElementById("modalTitle").textContent=action==="add"?"Add Demo Money":action==="send"?"Send Demo Money":"Self Transfer Demo";
  document.getElementById("modal").style.display="flex";
 }
+
 function closeModal(){
  document.getElementById("modal").style.display="none";
 }
+
 function confirmAction(){
  const amount=Number(document.getElementById("amount").value);
  const receiver=document.getElementById("receiver").value.trim();
- if(!Number.isFinite(amount)||amount<=0){alert("कृपया सही राशि लिखें।");return;}
+
+ if(!Number.isFinite(amount)||amount<=0){
+  alert("कृपया सही राशि लिखें।");
+  return;
+ }
+
  if(currentAction==="add"){
   balance+=amount;
   addTransaction("Demo Money Added",amount,"in");
  }else{
-  if(amount>balance){alert("डेमो वॉलेट में पर्याप्त बैलेंस नहीं है।");return;}
+  if(amount>balance){
+   alert("डेमो वॉलेट में पर्याप्त बैलेंस नहीं है।");
+   return;
+  }
   balance-=amount;
   addTransaction(currentAction==="send"?"Demo sent to "+(receiver||"Demo User"):"Self Transfer Demo",amount,"out");
  }
+
  updateBalance();
  closeModal();
 }
+
 function addTransaction(title,amount,type){
  transactions.unshift({title,amount,type});
  renderTransactions();
 }
+
 function renderTransactions(){
  const box=document.getElementById("transactions");
  box.innerHTML="";
+
  transactions.forEach(t=>{
   const row=document.createElement("div");
   row.className="transaction";
+
   const name=document.createElement("span");
   name.textContent=t.title;
+
   const value=document.createElement("b");
   value.textContent=(t.type==="in"?"+":"-")+"₹"+t.amount.toLocaleString("en-IN");
   value.style.color=t.type==="in"?"green":"#b3261e";
+
   row.append(name,value);
   box.appendChild(row);
  });
+
+ if(transactions.length===0){
+  box.innerHTML='<div class="muted">अभी कोई ट्रांजैक्शन नहीं है।</div>';
+ }
 }
+
 function showTransactions(){
  document.getElementById("transactions").scrollIntoView({behavior:"smooth"});
 }
-function showMessage(message){alert(message);}
+
+function showMessage(message){
+ alert(message);
+}
+
 updateBalance();
 </script>
 </body>
