@@ -15,9 +15,8 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Check website file
-        run: |
-          test -f index.html
+      - name: Check source file
+        run: test -f index.html
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -30,7 +29,20 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Prepare app
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Install Android SDK packages
+        run: |
+          sdkmanager \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
+
+      - name: Prepare website files for Android app
         run: |
           mkdir -p www
           cp index.html www/index.html
@@ -38,7 +50,7 @@ jobs:
           npm install @capacitor/core@7 @capacitor/android@7
           npm install --save-dev @capacitor/cli@7
 
-      - name: Configure app
+      - name: Configure Capacitor
         run: |
           cat > capacitor.config.json <<'EOF'
           {
@@ -51,7 +63,7 @@ jobs:
       - name: Create Android project
         run: npx cap add android
 
-      - name: Sync Android
+      - name: Sync Android project
         run: npx cap sync android
 
       - name: Build APK
