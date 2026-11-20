@@ -1,5 +1,4 @@
 
-
 name: Build AK Pay APK
 
 on:
@@ -13,13 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download AK Pay source
+      - name: Checkout source
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -27,29 +21,36 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Setup Android SDK
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Android
         uses: android-actions/setup-android@v3
 
-      - name: Install Capacitor
+      - name: Prepare website
         run: |
+          mkdir -p www
+          cp index.html www/index.html
           npm init -y
           npm install @capacitor/core@7 @capacitor/android@7
           npm install --save-dev @capacitor/cli@7
 
-      - name: Configure AK Pay
+      - name: Configure Capacitor
         run: |
           cat > capacitor.config.json <<'EOF'
           {
             "appId": "com.akpay.demo",
             "appName": "AK Pay Demo",
-            "webDir": "."
+            "webDir": "www"
           }
           EOF
 
-      - name: Create Android project
+      - name: Add Android
         run: npx cap add android
 
-      - name: Sync Android project
+      - name: Sync Android
         run: npx cap sync android
 
       - name: Build APK
