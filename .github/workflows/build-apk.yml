@@ -1,5 +1,5 @@
 
-name: AK Pay APK Only
+name: AK Pay Android APK
 
 on:
   workflow_dispatch:
@@ -8,15 +8,23 @@ permissions:
   contents: read
 
 jobs:
-  build-apk:
-    runs-on: ubuntu-latest
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout source
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check source file
-        run: test -f index.html
+      - name: Verify source
+        run: |
+          test -s index.html
+          echo "AK Pay source found"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -24,33 +32,25 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses
 
-      - name: Install Android SDK packages
+      - name: Install Android SDK
         run: |
-          sdkmanager \
-            "platform-tools" \
-            "platforms;android-35" \
-            "build-tools;35.0.0"
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Prepare website files for Android app
+      - name: Create Capacitor project
         run: |
           mkdir -p www
           cp index.html www/index.html
           npm init -y
-          npm install @capacitor/core@7 @capacitor/android@7
-          npm install --save-dev @capacitor/cli@7
+          npm install --save-exact @capacitor/core@7.4.3 @capacitor/android@7.4.3
+          npm install --save-dev --save-exact @capacitor/cli@7.4.3
 
-      - name: Configure Capacitor
+      - name: Create Capacitor config
         run: |
           cat > capacitor.config.json <<'EOF'
           {
@@ -60,21 +60,26 @@ jobs:
           }
           EOF
 
-      - name: Create Android project
+      - name: Add Android platform
         run: npx cap add android
 
       - name: Sync Android project
         run: npx cap sync android
 
-      - name: Build APK
+      - name: Build debug APK
         working-directory: android
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
-      - name: Upload APK
+      - name: Verify APK
+        run: |
+          test -s android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: AK-Pay-Demo-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+          retention-days: 7
